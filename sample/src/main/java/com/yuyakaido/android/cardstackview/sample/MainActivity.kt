@@ -16,14 +16,13 @@ import android.view.animation.DecelerateInterpolator
 import android.view.animation.LinearInterpolator
 import android.widget.TextView
 import com.yuyakaido.android.cardstackview.*
-import java.util.*
 
 class MainActivity : AppCompatActivity(), CardStackListener {
 
     private val drawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout) }
     private val cardStackView by lazy { findViewById<CardStackView>(R.id.card_stack_view) }
     private val manager by lazy { CardStackLayoutManager(this, this) }
-    private val adapter by lazy { CardStackAdapter(createSpots()) }
+    private val adapter by lazy { CityAdapter(createCities()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,12 +60,12 @@ class MainActivity : AppCompatActivity(), CardStackListener {
     }
 
     override fun onCardAppeared(view: View, position: Int) {
-        val textView = view.findViewById<TextView>(R.id.item_name)
+        val textView = view.findViewById<TextView>(R.id.item_spot)
         Log.d("CardStackView", "onCardAppeared: ($position) ${textView.text}")
     }
 
     override fun onCardDisappeared(view: View, position: Int) {
-        val textView = view.findViewById<TextView>(R.id.item_name)
+        val textView = view.findViewById<TextView>(R.id.item_spot)
         Log.d("CardStackView", "onCardDisappeared: ($position) ${textView.text}")
     }
 
@@ -158,131 +157,142 @@ class MainActivity : AppCompatActivity(), CardStackListener {
     }
 
     private fun paginate() {
-        val old = adapter.getSpots()
-        val new = old.plus(createSpots())
-        val callback = SpotDiffCallback(old, new)
+        val old = adapter.getCities()
+        val new = old.plus(createCities())
+        val callback = CityDiffCallback(old, new)
         val result = DiffUtil.calculateDiff(callback)
-        adapter.setSpots(new)
+        adapter.setCities(new)
         result.dispatchUpdatesTo(adapter)
     }
 
     private fun reload() {
-        val old = adapter.getSpots()
-        val new = createSpots()
-        val callback = SpotDiffCallback(old, new)
+        val old = adapter.getCities()
+        val new = createCities()
+        val callback = CityDiffCallback(old, new)
         val result = DiffUtil.calculateDiff(callback)
-        adapter.setSpots(new)
+        adapter.setCities(new)
         result.dispatchUpdatesTo(adapter)
     }
 
     private fun addFirst(size: Int) {
-        val old = adapter.getSpots()
-        val new = mutableListOf<Spot>().apply {
+        val old = adapter.getCities()
+        val new = mutableListOf<City>().apply {
             addAll(old)
             for (i in 0 until size) {
-                add(manager.topPosition, createSpot())
+                add(manager.topPosition, createCity())
             }
         }
-        val callback = SpotDiffCallback(old, new)
+        val callback = CityDiffCallback(old, new)
         val result = DiffUtil.calculateDiff(callback)
-        adapter.setSpots(new)
+        adapter.setCities(new)
         result.dispatchUpdatesTo(adapter)
     }
 
     private fun addLast(size: Int) {
-        val old = adapter.getSpots()
-        val new = mutableListOf<Spot>().apply {
+        val old = adapter.getCities()
+        val new = mutableListOf<City>().apply {
             addAll(old)
-            addAll(List(size) { createSpot() })
+            addAll(List(size) { createCity() })
         }
-        val callback = SpotDiffCallback(old, new)
+        val callback = CityDiffCallback(old, new)
         val result = DiffUtil.calculateDiff(callback)
-        adapter.setSpots(new)
+        adapter.setCities(new)
         result.dispatchUpdatesTo(adapter)
     }
 
     private fun removeFirst(size: Int) {
-        if (adapter.getSpots().isEmpty()) {
+        if (adapter.getCities().isEmpty()) {
             return
         }
 
-        val old = adapter.getSpots()
-        val new = mutableListOf<Spot>().apply {
+        val old = adapter.getCities()
+        val new = mutableListOf<City>().apply {
             addAll(old)
             for (i in 0 until size) {
                 removeAt(manager.topPosition)
             }
         }
-        val callback = SpotDiffCallback(old, new)
+        val callback = CityDiffCallback(old, new)
         val result = DiffUtil.calculateDiff(callback)
-        adapter.setSpots(new)
+        adapter.setCities(new)
         result.dispatchUpdatesTo(adapter)
     }
 
     private fun removeLast(size: Int) {
-        if (adapter.getSpots().isEmpty()) {
+        if (adapter.getCities().isEmpty()) {
             return
         }
 
-        val old = adapter.getSpots()
-        val new = mutableListOf<Spot>().apply {
+        val old = adapter.getCities()
+        val new = mutableListOf<City>().apply {
             addAll(old)
             for (i in 0 until size) {
                 removeAt(this.size - 1)
             }
         }
-        val callback = SpotDiffCallback(old, new)
+        val callback = CityDiffCallback(old, new)
         val result = DiffUtil.calculateDiff(callback)
-        adapter.setSpots(new)
+        adapter.setCities(new)
         result.dispatchUpdatesTo(adapter)
     }
 
     private fun replace() {
-        val old = adapter.getSpots()
-        val new = mutableListOf<Spot>().apply {
+        val old = adapter.getCities()
+        val new = mutableListOf<City>().apply {
             addAll(old)
             removeAt(manager.topPosition)
-            add(manager.topPosition, createSpot())
+            add(manager.topPosition, createCity())
         }
-        adapter.setSpots(new)
+        adapter.setCities(new)
         adapter.notifyItemChanged(manager.topPosition)
     }
 
     private fun swap() {
-        val old = adapter.getSpots()
-        val new = mutableListOf<Spot>().apply {
+        val old = adapter.getCities()
+        val new = mutableListOf<City>().apply {
             addAll(old)
             val first = removeAt(manager.topPosition)
             val last = removeAt(this.size - 1)
             add(manager.topPosition, last)
             add(first)
         }
-        val callback = SpotDiffCallback(old, new)
+        val callback = CityDiffCallback(old, new)
         val result = DiffUtil.calculateDiff(callback)
-        adapter.setSpots(new)
+        adapter.setCities(new)
         result.dispatchUpdatesTo(adapter)
     }
 
-    private fun createSpot(): Spot {
-        return Spot(
-                name = "Yasaka Shrine",
-                city = "Kyoto",
-                url = "https://source.unsplash.com/Xq1ntWruZQI/600x800"
-        )
+    private fun createCities(): List<City> {
+        val cities = mutableListOf<City>()
+        cities.add(City(name = "Kyoto", spots = createSpots()))
+        cities.add(City(name = "Kyoto", spots = createSpots()))
+        cities.add(City(name = "Kyoto", spots = createSpots()))
+        cities.add(City(name = "Kyoto", spots = createSpots()))
+        cities.add(City(name = "Kyoto", spots = createSpots()))
+        cities.add(City(name = "Kyoto", spots = createSpots()))
+        cities.add(City(name = "Kyoto", spots = createSpots()))
+        cities.add(City(name = "Kyoto", spots = createSpots()))
+        cities.add(City(name = "Kyoto", spots = createSpots()))
+        cities.add(City(name = "Kyoto", spots = createSpots()))
+        return cities
+    }
+
+    private fun createCity(): City {
+        return City(name = "Kyoto", spots = createSpots())
     }
 
     private fun createSpots(): List<Spot> {
-        val spots = ArrayList<Spot>()
-        spots.add(Spot(name = "Yasaka Shrine", city = "Kyoto", url = "https://source.unsplash.com/Xq1ntWruZQI/600x800"))
-        spots.add(Spot(name = "Fushimi Inari Shrine", city = "Kyoto", url = "https://source.unsplash.com/NYyCqdBOKwc/600x800"))
-        spots.add(Spot(name = "Bamboo Forest", city = "Kyoto", url = "https://source.unsplash.com/buF62ewDLcQ/600x800"))
-        spots.add(Spot(name = "Brooklyn Bridge", city = "New York", url = "https://source.unsplash.com/THozNzxEP3g/600x800"))
-        spots.add(Spot(name = "Empire State Building", city = "New York", url = "https://source.unsplash.com/USrZRcRS2Lw/600x800"))
-        spots.add(Spot(name = "The statue of Liberty", city = "New York", url = "https://source.unsplash.com/PeFk7fzxTdk/600x800"))
-        spots.add(Spot(name = "Louvre Museum", city = "Paris", url = "https://source.unsplash.com/LrMWHKqilUw/600x800"))
-        spots.add(Spot(name = "Eiffel Tower", city = "Paris", url = "https://source.unsplash.com/HN-5Z6AmxrM/600x800"))
-        spots.add(Spot(name = "Big Ben", city = "London", url = "https://source.unsplash.com/CdVAUADdqEc/600x800"))
-        spots.add(Spot(name = "Great Wall of China", city = "China", url = "https://source.unsplash.com/AWh9C-QjhE4/600x800"))
+        val spots = mutableListOf<Spot>()
+        spots.add(Spot(name = "Yasaka Shrine", url = "https://source.unsplash.com/Xq1ntWruZQI/600x800"))
+        spots.add(Spot(name = "Fushimi Inari Shrine", url = "https://source.unsplash.com/NYyCqdBOKwc/600x800"))
+        spots.add(Spot(name = "Bamboo Forest", url = "https://source.unsplash.com/buF62ewDLcQ/600x800"))
+        spots.add(Spot(name = "Brooklyn Bridge", url = "https://source.unsplash.com/THozNzxEP3g/600x800"))
+        spots.add(Spot(name = "Empire State Building", url = "https://source.unsplash.com/USrZRcRS2Lw/600x800"))
+        spots.add(Spot(name = "The statue of Liberty", url = "https://source.unsplash.com/PeFk7fzxTdk/600x800"))
+        spots.add(Spot(name = "Louvre Museum", url = "https://source.unsplash.com/LrMWHKqilUw/600x800"))
+        spots.add(Spot(name = "Eiffel Tower", url = "https://source.unsplash.com/HN-5Z6AmxrM/600x800"))
+        spots.add(Spot(name = "Big Ben", url = "https://source.unsplash.com/CdVAUADdqEc/600x800"))
+        spots.add(Spot(name = "Great Wall of China", url = "https://source.unsplash.com/AWh9C-QjhE4/600x800"))
         return spots
     }
 

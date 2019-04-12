@@ -2,9 +2,9 @@ package com.yuyakaido.android.cardstackview.sample
 
 import android.support.v7.util.DiffUtil
 
-class SpotDiffCallback(
-        private val old: List<Spot>,
-        private val new: List<Spot>
+class CityDiffCallback(
+        private val old: List<City>,
+        private val new: List<City>
 ) : DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {

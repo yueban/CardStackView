@@ -14,4 +14,8 @@
     <string name="remove_spot_from_last">Remove spot from last</string>
     <string name="replace_first_spot">Replace first spot</string>
     <string name="swap_first_for_last">Swap first for last</string>
+
+    <!-- Card -->
+    <string name="city_name">%1$d. %2$s</string>
+    <string name="spot_name">%1$d. %2$s</string>
 </resources>
