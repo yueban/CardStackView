@@ -4,7 +4,7 @@ import android.graphics.Camera
 import android.view.animation.Animation
 import android.view.animation.Transformation
 
-class OvershootAnimation(
+class OvershotAnimation(
         private val centerX: Float,
         private val centerY: Float,
         private val direction: Int

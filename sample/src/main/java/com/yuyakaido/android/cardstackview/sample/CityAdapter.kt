@@ -41,10 +41,10 @@ class CityAdapter(
                             TouchArea.Left -> {
                                 if (currentIndex == 0) {
                                     holder.itemView.startAnimation(
-                                            OvershootAnimation(
+                                            OvershotAnimation(
                                                     centerX = holder.itemView.width / 2.0f,
                                                     centerY = holder.itemView.height / 2.0f,
-                                                    direction = OvershootAnimation.DIRECTION_LEFT
+                                                    direction = OvershotAnimation.DIRECTION_LEFT
                                             )
                                     )
                                 } else {
@@ -54,10 +54,10 @@ class CityAdapter(
                             TouchArea.Right -> {
                                 if (currentIndex == city.spots.size - 1) {
                                     holder.itemView.startAnimation(
-                                            OvershootAnimation(
+                                            OvershotAnimation(
                                                     centerX = holder.itemView.width / 2.0f,
                                                     centerY = holder.itemView.height / 2.0f,
-                                                    direction = OvershootAnimation.DIRECTION_RIGHT
+                                                    direction = OvershotAnimation.DIRECTION_RIGHT
                                             )
                                     )
                                 } else {
