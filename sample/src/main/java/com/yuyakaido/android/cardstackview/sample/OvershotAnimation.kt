@@ -13,7 +13,7 @@ class OvershotAnimation(
     companion object {
         private const val FROM_DEGREES = 0.0f
         private const val TO_DEGREES = 1.0f
-        private const val DURATION = 100L
+        private const val DURATION = 50L
         const val DIRECTION_LEFT = -1
         const val DIRECTION_RIGHT = 1
     }
@@ -21,7 +21,7 @@ class OvershotAnimation(
     override fun initialize(width: Int, height: Int, parentWidth: Int, parentHeight: Int) {
         super.initialize(width, height, parentWidth, parentHeight)
         duration = DURATION
-        repeatMode = Animation.REVERSE
+        repeatMode = REVERSE
         repeatCount = 1
     }
 

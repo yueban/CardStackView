@@ -3,9 +3,11 @@ package com.yuyakaido.android.cardstackview.sample
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v7.widget.RecyclerView
+import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.widget.TextView
 
 class CityAdapter(
@@ -40,26 +42,42 @@ class CityAdapter(
                         when (area) {
                             TouchArea.Left -> {
                                 if (currentIndex == 0) {
-                                    holder.itemView.startAnimation(
-                                            OvershotAnimation(
-                                                    centerX = holder.itemView.width / 2.0f,
-                                                    centerY = holder.itemView.height / 2.0f,
-                                                    direction = OvershotAnimation.DIRECTION_LEFT
-                                            )
+                                    val animation = OvershotAnimation(
+                                            centerX = holder.itemView.width / 2.0f,
+                                            centerY = holder.itemView.height / 2.0f,
+                                            direction = OvershotAnimation.DIRECTION_LEFT
                                     )
+                                    animation.setAnimationListener(object : Animation.AnimationListener {
+                                        override fun onAnimationRepeat(animation: Animation?) = Unit
+                                        override fun onAnimationStart(animation: Animation?) = Unit
+                                        override fun onAnimationEnd(animation: Animation?) {
+                                            holder.itemView.performHapticFeedback(
+                                                    HapticFeedbackConstants.LONG_PRESS
+                                            )
+                                        }
+                                    })
+                                    holder.itemView.startAnimation(animation)
                                 } else {
                                     holder.pager.setCurrentItem(currentIndex - 1, false)
                                 }
                             }
                             TouchArea.Right -> {
                                 if (currentIndex == city.spots.size - 1) {
-                                    holder.itemView.startAnimation(
-                                            OvershotAnimation(
-                                                    centerX = holder.itemView.width / 2.0f,
-                                                    centerY = holder.itemView.height / 2.0f,
-                                                    direction = OvershotAnimation.DIRECTION_RIGHT
-                                            )
+                                    val animation = OvershotAnimation(
+                                            centerX = holder.itemView.width / 2.0f,
+                                            centerY = holder.itemView.height / 2.0f,
+                                            direction = OvershotAnimation.DIRECTION_RIGHT
                                     )
+                                    animation.setAnimationListener(object : Animation.AnimationListener {
+                                        override fun onAnimationRepeat(animation: Animation?) = Unit
+                                        override fun onAnimationStart(animation: Animation?) = Unit
+                                        override fun onAnimationEnd(animation: Animation?) {
+                                            holder.itemView.performHapticFeedback(
+                                                    HapticFeedbackConstants.LONG_PRESS
+                                            )
+                                        }
+                                    })
+                                    holder.itemView.startAnimation(animation)
                                 } else {
                                     holder.pager.setCurrentItem(currentIndex + 1, false)
                                 }
