@@ -14,39 +14,6 @@ public class CardStackState {
     public int targetPosition = RecyclerView.NO_POSITION;
     public float proportion = 0.0f;
 
-    public enum Status {
-        Idle,
-        Dragging,
-        RewindAnimating,
-        AutomaticSwipeAnimating,
-        AutomaticSwipeAnimated,
-        ManualSwipeAnimating,
-        ManualSwipeAnimated;
-
-        public boolean isBusy() {
-            return this != Idle;
-        }
-
-        public boolean isDragging() {
-            return this == Dragging;
-        }
-
-        public boolean isSwipeAnimating() {
-            return this == ManualSwipeAnimating || this == AutomaticSwipeAnimating;
-        }
-
-        public Status toAnimatedStatus() {
-            switch (this) {
-                case ManualSwipeAnimating:
-                    return ManualSwipeAnimated;
-                case AutomaticSwipeAnimating:
-                    return AutomaticSwipeAnimated;
-                default:
-                    return Idle;
-            }
-        }
-    }
-
     public void next(Status state) {
         this.status = state;
     }
@@ -79,6 +46,15 @@ public class CardStackState {
         return Math.min(ratio, 1.0f);
     }
 
+    public float getActualRatioX() {
+        float ratio = dx * 1.0f / width;
+        if (ratio > 0) {
+            return Math.min(ratio, 1.0f);
+        } else {
+            return Math.max(ratio, -1.0f);
+        }
+    }
+
     public boolean isSwipeCompleted() {
         if (status.isSwipeAnimating()) {
             if (topPosition < targetPosition) {
@@ -104,6 +80,39 @@ public class CardStackState {
             return false;
         }
         return true;
+    }
+
+    public enum Status {
+        Idle,
+        Dragging,
+        RewindAnimating,
+        AutomaticSwipeAnimating,
+        AutomaticSwipeAnimated,
+        ManualSwipeAnimating,
+        ManualSwipeAnimated;
+
+        public boolean isBusy() {
+            return this != Idle;
+        }
+
+        public boolean isDragging() {
+            return this == Dragging;
+        }
+
+        public boolean isSwipeAnimating() {
+            return this == ManualSwipeAnimating || this == AutomaticSwipeAnimating;
+        }
+
+        public Status toAnimatedStatus() {
+            switch (this) {
+                case ManualSwipeAnimating:
+                    return ManualSwipeAnimated;
+                case AutomaticSwipeAnimating:
+                    return AutomaticSwipeAnimated;
+                default:
+                    return Idle;
+            }
+        }
     }
 
 }
