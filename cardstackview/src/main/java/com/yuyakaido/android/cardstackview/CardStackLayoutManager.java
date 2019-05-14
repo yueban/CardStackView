@@ -457,8 +457,17 @@ public class CardStackLayoutManager
         view.setScaleY(1.0f);
     }
 
+    public float getActualRatioXOnThreshold() {
+        float ratio = state.getActualRatioX() / setting.swipeThreshold;
+        if (ratio > 0) {
+            return Math.min(ratio, 1.0f);
+        } else {
+            return Math.max(ratio, -1.0f);
+        }
+    }
+
     private void updateRotation(View view) {
-        float degree = state.dx * setting.maxDegree / getWidth() * state.proportion;
+        float degree = setting.maxDegree * getActualRatioXOnThreshold();
         view.setRotation(degree);
     }
 
