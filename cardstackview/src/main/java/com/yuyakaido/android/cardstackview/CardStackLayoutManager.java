@@ -353,6 +353,7 @@ public class CardStackLayoutManager
         if (state.status.isDragging()) {
             listener.onCardDragging(state.getDirection(), state.getRatio());
         }
+        listener.onCardActualRatioXOnThresholdChanged(getActualRatioXOnThreshold());
     }
 
     private void updateTranslation(View view) {
@@ -456,7 +457,7 @@ public class CardStackLayoutManager
         view.setScaleY(1.0f);
     }
 
-    public float getActualRatioXOnThreshold() {
+    private float getActualRatioXOnThreshold() {
         float ratio = state.getActualRatioX() / setting.swipeThreshold;
         if (ratio > 0) {
             return Math.min(ratio, 1.0f);
