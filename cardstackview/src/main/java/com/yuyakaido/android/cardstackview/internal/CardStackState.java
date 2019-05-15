@@ -46,15 +46,6 @@ public class CardStackState {
         return Math.min(ratio, 1.0f);
     }
 
-    public float getActualRatioX() {
-        float ratio = dx * 1.0f / width;
-        if (ratio > 0) {
-            return Math.min(ratio, 1.0f);
-        } else {
-            return Math.max(ratio, -1.0f);
-        }
-    }
-
     public boolean isSwipeCompleted() {
         if (status.isSwipeAnimating()) {
             if (topPosition < targetPosition) {
