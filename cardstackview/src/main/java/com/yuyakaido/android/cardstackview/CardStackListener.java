@@ -9,7 +9,7 @@ public interface CardStackListener {
         }
 
         @Override
-        public void onCardActualRatioXOnThresholdChanged(float ratio) {
+        public void onCardTranslation(float dx, float dy) {
         }
 
         @Override
@@ -35,7 +35,7 @@ public interface CardStackListener {
 
     void onCardDragging(Direction direction, float ratio);
 
-    void onCardActualRatioXOnThresholdChanged(float ratio);
+    void onCardTranslation(float dx, float dy);
 
     void onCardSwiped(Direction direction);
 

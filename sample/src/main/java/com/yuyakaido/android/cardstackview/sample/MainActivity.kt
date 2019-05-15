@@ -44,8 +44,8 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         Log.d("CardStackView", "onCardDragging: d = ${direction.name}, r = $ratio")
     }
 
-    override fun onCardActualRatioXOnThresholdChanged(ratio: Float) {
-        Log.d("CardStackView", "onCardActualRatioXOnThresholdChanged: r = $ratio")
+    override fun onCardTranslation(dx: Float, dy: Float) {
+        Log.d("CardStackView", "onCardTranslation: dx = $dx, dy = $dy")
     }
 
     override fun onCardSwiped(direction: Direction) {
