@@ -19,12 +19,11 @@ import com.yuyakaido.android.cardstackview.*
 import java.util.*
 
 class MainActivity : AppCompatActivity(), CardStackListener {
-
     private val drawerLayout by lazy { findViewById<DrawerLayout>(R.id.drawer_layout) }
+
     private val cardStackView by lazy { findViewById<CardStackView>(R.id.card_stack_view) }
     private val manager by lazy { CardStackLayoutManager(this, this) }
     private val adapter by lazy { CardStackAdapter(createSpots()) }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,6 +42,10 @@ class MainActivity : AppCompatActivity(), CardStackListener {
 
     override fun onCardDragging(direction: Direction, ratio: Float) {
         Log.d("CardStackView", "onCardDragging: d = ${direction.name}, r = $ratio")
+    }
+
+    override fun onCardActualRatioXOnThresholdChanged(ratio: Float) {
+        Log.d("CardStackView", "onCardActualRatioXOnThresholdChanged: r = $ratio")
     }
 
     override fun onCardSwiped(direction: Direction) {
