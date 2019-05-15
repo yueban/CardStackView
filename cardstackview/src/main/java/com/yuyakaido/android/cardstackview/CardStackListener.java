@@ -17,6 +17,11 @@ public interface CardStackListener {
         }
 
         @Override
+        public void onCardRewoundStart() {
+
+        }
+
+        @Override
         public void onCardRewound() {
         }
 
@@ -38,6 +43,8 @@ public interface CardStackListener {
     void onCardTranslation(float dx, float dy);
 
     void onCardSwiped(Direction direction);
+
+    void onCardRewoundStart();
 
     void onCardRewound();
 

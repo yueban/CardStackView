@@ -10,16 +10,8 @@ import com.yuyakaido.android.cardstackview.RewindAnimationSetting;
 
 public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
 
-    public enum ScrollType {
-        AutomaticSwipe,
-        AutomaticRewind,
-        ManualSwipe,
-        ManualCancel
-    }
-
     private ScrollType type;
     private CardStackLayoutManager manager;
-
     public CardStackSmoothScroller(
             ScrollType type,
             CardStackLayoutManager manager
@@ -124,13 +116,14 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
                 break;
             case AutomaticRewind:
                 state.next(CardStackState.Status.RewindAnimating);
+                listener.onCardRewoundStart();
                 break;
             case ManualSwipe:
                 state.next(CardStackState.Status.ManualSwipeAnimating);
                 listener.onCardDisappeared(manager.getTopView(), manager.getTopPosition());
                 break;
             case ManualCancel:
-                state.next(CardStackState.Status.RewindAnimating);
+                state.next(CardStackState.Status.CancelAnimating);
                 break;
         }
     }
@@ -189,6 +182,13 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
                 break;
         }
         return dy;
+    }
+
+    public enum ScrollType {
+        AutomaticSwipe,
+        AutomaticRewind,
+        ManualSwipe,
+        ManualCancel
     }
 
 }
