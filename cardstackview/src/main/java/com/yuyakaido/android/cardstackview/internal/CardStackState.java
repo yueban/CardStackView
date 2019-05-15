@@ -77,6 +77,7 @@ public class CardStackState {
         Idle,
         Dragging,
         RewindAnimating,
+        CancelAnimating,
         AutomaticSwipeAnimating,
         AutomaticSwipeAnimated,
         ManualSwipeAnimating,

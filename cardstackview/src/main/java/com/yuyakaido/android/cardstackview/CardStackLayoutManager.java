@@ -89,6 +89,7 @@ public class CardStackLayoutManager
                 }
                 break;
             case RewindAnimating:
+            case CancelAnimating:
                 state.dx -= dx;
                 update(recycler);
                 return dx;
@@ -137,6 +138,7 @@ public class CardStackLayoutManager
                 }
                 break;
             case RewindAnimating:
+            case CancelAnimating:
                 state.dy -= dy;
                 update(recycler);
                 return dy;
@@ -334,19 +336,16 @@ public class CardStackLayoutManager
 
             resetTranslation(child);
             resetScale(child);
-            resetRotation(child);
             resetOverlay(child);
 
             if (i == state.topPosition) {
                 updateTranslation(child);
                 resetScale(child);
-                updateRotation(child);
                 updateOverlay(child);
             } else {
                 int currentIndex = i - state.topPosition;
                 updateTranslation(child, currentIndex);
                 updateScale(child, currentIndex);
-                resetRotation(child);
                 resetOverlay(child);
             }
         }
@@ -457,15 +456,6 @@ public class CardStackLayoutManager
     private void resetScale(View view) {
         view.setScaleX(1.0f);
         view.setScaleY(1.0f);
-    }
-
-    private void updateRotation(View view) {
-        float degree = state.dx * setting.maxDegree / getWidth() * state.proportion;
-        view.setRotation(degree);
-    }
-
-    private void resetRotation(View view) {
-        view.setRotation(0.0f);
     }
 
     private void updateOverlay(View view) {
@@ -602,13 +592,6 @@ public class CardStackLayoutManager
             throw new IllegalArgumentException("SwipeThreshold must be 0.0f to 1.0f.");
         }
         setting.swipeThreshold = swipeThreshold;
-    }
-
-    public void setMaxDegree(@FloatRange(from = -360.0f, to = 360.0f) float maxDegree) {
-        if (maxDegree < -360.0f || 360.0f < maxDegree) {
-            throw new IllegalArgumentException("MaxDegree must be -360.0f to 360.0f");
-        }
-        setting.maxDegree = maxDegree;
     }
 
     public void setDirections(@NonNull List<Direction> directions) {

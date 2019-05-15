@@ -55,6 +55,13 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         }
     }
 
+    override fun onCardRewoundStart() {
+        manager.topView?.let {
+            it.rotation = 0f
+        }
+        Log.d("CardStackView", "onCardRewoundStart: ${manager.topPosition}")
+    }
+
     override fun onCardRewound() {
         Log.d("CardStackView", "onCardRewound: ${manager.topPosition}")
     }
@@ -145,7 +152,6 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         manager.setTranslationInterval(8.0f)
         manager.setScaleInterval(0.95f)
         manager.setSwipeThreshold(0.19f)
-        manager.setMaxDegree(6.0f)
         manager.setDirections(Direction.HORIZONTAL)
         manager.setCanScrollHorizontal(true)
         manager.setCanScrollVertical(true)
