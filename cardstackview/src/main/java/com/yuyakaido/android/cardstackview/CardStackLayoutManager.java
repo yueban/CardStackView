@@ -266,9 +266,9 @@ public class CardStackLayoutManager
             // 4. Aをスワイプする
             // 5. カードを1枚だけ画面に表示する（このカードをBとする）
             // 6. ページング完了後はBが表示されるはずが、Aが画面に表示される
-            removeAndRecycleView(getTopView(), recycler);
-
             final Direction direction = state.getDirection();
+            listener.onCardSwiped(direction);
+            removeAndRecycleView(getTopView(), recycler);
 
             state.next(state.status.toAnimatedStatus());
             state.topPosition++;

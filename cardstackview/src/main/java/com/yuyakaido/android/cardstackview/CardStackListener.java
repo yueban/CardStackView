@@ -13,6 +13,11 @@ public interface CardStackListener {
         }
 
         @Override
+        public void onCardSwipeCompleted(Direction direction) {
+
+        }
+
+        @Override
         public void onCardSwiped(Direction direction) {
         }
 
@@ -41,6 +46,8 @@ public interface CardStackListener {
     void onCardDragging(Direction direction, float ratio);
 
     void onCardTranslation(float dx, float dy);
+
+    void onCardSwipeCompleted(Direction direction);
 
     void onCardSwiped(Direction direction);
 
