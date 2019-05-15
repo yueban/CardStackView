@@ -586,9 +586,16 @@ public class CardStackLayoutManager
         setting.scaleInterval = scaleInterval;
     }
 
-    public void setSwipeThreshold(@FloatRange(from = 0.0f, to = 1.0f) float swipeThreshold) {
-        if (swipeThreshold < 0.0f || 1.0f < swipeThreshold) {
-            throw new IllegalArgumentException("SwipeThreshold must be 0.0f to 1.0f.");
+    public void setSwipeThresholdRatio(@FloatRange(from = 0.0f, to = 1.0f) float swipeThresholdRatio) {
+        if (swipeThresholdRatio < 0.0f || 1.0f < swipeThresholdRatio) {
+            throw new IllegalArgumentException("swipeThresholdRatio must be 0.0f to 1.0f.");
+        }
+        setting.swipeThresholdRatio = swipeThresholdRatio;
+    }
+
+    public void setSwipeThreshold(@FloatRange(from = 0.0f) float swipeThreshold) {
+        if (swipeThreshold < 0.0f) {
+            throw new IllegalArgumentException("SwipeThreshold must be greater than 0.0f.");
         }
         setting.swipeThreshold = swipeThreshold;
     }

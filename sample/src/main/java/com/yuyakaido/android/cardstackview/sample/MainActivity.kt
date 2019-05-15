@@ -151,7 +151,7 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         manager.setVisibleCount(3)
         manager.setTranslationInterval(8.0f)
         manager.setScaleInterval(0.95f)
-        manager.setSwipeThreshold(0.19f)
+        manager.setSwipeThresholdRatio(0.19f)
         manager.setDirections(Direction.HORIZONTAL)
         manager.setCanScrollHorizontal(true)
         manager.setCanScrollVertical(true)
