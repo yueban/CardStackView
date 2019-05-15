@@ -48,6 +48,10 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         Log.d("CardStackView", "onCardTranslation: dx = $dx, dy = $dy")
     }
 
+    override fun onCardSwipeCompleted(direction: Direction?) {
+        Log.d("CardStackView", "onCardSwipeCompleted: p = ${manager.topPosition}, d = $direction")
+    }
+
     override fun onCardSwiped(direction: Direction) {
         Log.d("CardStackView", "onCardSwiped: p = ${manager.topPosition}, d = $direction")
         if (manager.topPosition == adapter.itemCount - 5) {
