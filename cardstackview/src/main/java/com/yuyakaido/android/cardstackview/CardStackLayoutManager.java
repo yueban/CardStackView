@@ -334,24 +334,28 @@ public class CardStackLayoutManager
             measureChildWithMargins(child, 0, 0);
             layoutDecoratedWithMargins(child, parentLeft, parentTop, parentRight, parentBottom);
 
-            resetTranslation(child);
-            resetScale(child);
-            resetOverlay(child);
-
-            if (i == state.topPosition) {
-                updateTranslation(child);
-                resetScale(child);
-                updateOverlay(child);
+            int currentIndex = i - state.topPosition;
+            if (setting.updateCardUIManually) {
+                listener.onUpdateCardTranslation(currentIndex, child);
             } else {
-                int currentIndex = i - state.topPosition;
-                updateTranslation(child, currentIndex);
-                updateScale(child, currentIndex);
+                resetTranslation(child);
+                resetScale(child);
                 resetOverlay(child);
+
+                if (currentIndex == 0) {
+                    updateTranslation(child);
+                    resetScale(child);
+                    updateOverlay(child);
+                } else {
+                    updateTranslation(child, currentIndex);
+                    updateScale(child, currentIndex);
+                    resetOverlay(child);
+                }
             }
         }
 
         if (state.status.isDragging()) {
-            listener.onCardDragging(state.getDirection(), state.getRatio());
+            listener.onCardDragging(state.getDirection());
         }
 
         listener.onCardTranslation(state.dx, state.dy);
@@ -578,6 +582,10 @@ public class CardStackLayoutManager
             throw new IllegalArgumentException("TranslationInterval must be greater than or equal 0.0f");
         }
         setting.translationInterval = translationInterval;
+    }
+
+    public void setUpdateCardUIManually(boolean updateCardUIManually) {
+        setting.updateCardUIManually = updateCardUIManually;
     }
 
     public void setScaleInterval(@FloatRange(from = 0.0f) float scaleInterval) {

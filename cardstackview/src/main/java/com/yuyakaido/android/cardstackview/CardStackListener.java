@@ -5,7 +5,7 @@ import android.view.View;
 public interface CardStackListener {
     CardStackListener DEFAULT = new CardStackListener() {
         @Override
-        public void onCardDragging(Direction direction, float ratio) {
+        public void onCardDragging(Direction direction) {
         }
 
         @Override
@@ -41,9 +41,13 @@ public interface CardStackListener {
         @Override
         public void onCardDisappeared(View view, int position) {
         }
+
+        @Override
+        public void onUpdateCardTranslation(int currentIndex, View child) {
+        }
     };
 
-    void onCardDragging(Direction direction, float ratio);
+    void onCardDragging(Direction direction);
 
     void onCardTranslation(float dx, float dy);
 
@@ -60,4 +64,6 @@ public interface CardStackListener {
     void onCardAppeared(View view, int position);
 
     void onCardDisappeared(View view, int position);
+
+    void onUpdateCardTranslation(int currentIndex, View child);
 }

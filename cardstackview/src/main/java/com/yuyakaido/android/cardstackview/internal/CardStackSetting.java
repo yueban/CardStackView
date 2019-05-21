@@ -15,6 +15,7 @@ public class CardStackSetting {
     public StackFrom stackFrom = StackFrom.None;
     public int visibleCount = 3;
     public float translationInterval = 8.0f;
+    public boolean updateCardUIManually = false;
     public float scaleInterval = 0.95f; // 0.0f - 1.0f
     public float swipeThresholdRatio = 0.3f; // 0.0f - 1.0f
     public float swipeThreshold = 100f; // px

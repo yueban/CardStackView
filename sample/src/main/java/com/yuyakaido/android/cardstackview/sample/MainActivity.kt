@@ -40,8 +40,8 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         }
     }
 
-    override fun onCardDragging(direction: Direction, ratio: Float) {
-        Log.d("CardStackView", "onCardDragging: d = ${direction.name}, r = $ratio")
+    override fun onCardDragging(direction: Direction) {
+        Log.d("CardStackView", "onCardDragging: d = ${direction.name}")
     }
 
     override fun onCardTranslation(dx: Float, dy: Float) {
@@ -82,6 +82,10 @@ class MainActivity : AppCompatActivity(), CardStackListener {
     override fun onCardDisappeared(view: View, position: Int) {
         val textView = view.findViewById<TextView>(R.id.item_name)
         Log.d("CardStackView", "onCardDisappeared: ($position) ${textView.text}")
+    }
+
+    override fun onUpdateCardTranslation(currentIndex: Int, child: View) {
+        Log.d("CardStackView", "onUpdateCardTranslation: ($currentIndex) $child ")
     }
 
     private fun setupNavigation() {
@@ -151,7 +155,7 @@ class MainActivity : AppCompatActivity(), CardStackListener {
     }
 
     private fun initialize() {
-        manager.setStackFrom(StackFrom.None)
+        manager.setStackFrom(StackFrom.Bottom)
         manager.setVisibleCount(3)
         manager.setTranslationInterval(8.0f)
         manager.setScaleInterval(0.95f)
