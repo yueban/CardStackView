@@ -30,7 +30,7 @@ public class CardStackLayoutManager
     private CardStackState state = new CardStackState();
 
     public CardStackLayoutManager(Context context) {
-        this(context,  CardStackListener.DEFAULT);
+        this(context, CardStackListener.DEFAULT);
     }
 
     public CardStackLayoutManager(Context context, CardStackListener listener) {
@@ -336,7 +336,7 @@ public class CardStackLayoutManager
 
             int currentIndex = i - state.topPosition;
             if (setting.updateCardUIManually) {
-                listener.onUpdateCardTranslation(currentIndex, child);
+                listener.onUpdateCardUIManually(currentIndex, child);
             } else {
                 resetTranslation(child);
                 resetScale(child);
