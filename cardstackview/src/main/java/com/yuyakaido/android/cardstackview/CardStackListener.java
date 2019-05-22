@@ -23,7 +23,7 @@ public interface CardStackListener {
 
     void onCardDisappeared(View view, int position);
 
-    void onUpdateCardTranslation(int currentIndex, View child);
+    void onUpdateCardUIManually(int currentIndex, View child);
 
     public class DefaultCardStackListener implements CardStackListener {
         @Override
@@ -65,7 +65,7 @@ public interface CardStackListener {
         }
 
         @Override
-        public void onUpdateCardTranslation(int currentIndex, View child) {
+        public void onUpdateCardUIManually(int currentIndex, View child) {
         }
     }
 }

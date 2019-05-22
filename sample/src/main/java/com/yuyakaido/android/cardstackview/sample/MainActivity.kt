@@ -84,8 +84,8 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         Log.d("CardStackView", "onCardDisappeared: ($position) ${textView.text}")
     }
 
-    override fun onUpdateCardTranslation(currentIndex: Int, child: View) {
-        Log.d("CardStackView", "onUpdateCardTranslation: ($currentIndex) $child ")
+    override fun onUpdateCardUIManually(currentIndex: Int, child: View) {
+        Log.d("CardStackView", "onUpdateCardUIManually: ($currentIndex) $child ")
     }
 
     private fun setupNavigation() {
