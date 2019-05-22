@@ -3,7 +3,29 @@ package com.yuyakaido.android.cardstackview;
 import android.view.View;
 
 public interface CardStackListener {
-    CardStackListener DEFAULT = new CardStackListener() {
+    CardStackListener DEFAULT = new DefaultCardStackListener();
+
+    void onCardDragging(Direction direction);
+
+    void onCardTranslation(float dx, float dy);
+
+    void onCardSwipeCompleted(Direction direction);
+
+    void onCardSwiped(Direction direction);
+
+    void onCardRewoundStart();
+
+    void onCardRewound();
+
+    void onCardCanceled();
+
+    void onCardAppeared(View view, int position);
+
+    void onCardDisappeared(View view, int position);
+
+    void onUpdateCardTranslation(int currentIndex, View child);
+
+    public class DefaultCardStackListener implements CardStackListener {
         @Override
         public void onCardDragging(Direction direction) {
         }
@@ -45,25 +67,5 @@ public interface CardStackListener {
         @Override
         public void onUpdateCardTranslation(int currentIndex, View child) {
         }
-    };
-
-    void onCardDragging(Direction direction);
-
-    void onCardTranslation(float dx, float dy);
-
-    void onCardSwipeCompleted(Direction direction);
-
-    void onCardSwiped(Direction direction);
-
-    void onCardRewoundStart();
-
-    void onCardRewound();
-
-    void onCardCanceled();
-
-    void onCardAppeared(View view, int position);
-
-    void onCardDisappeared(View view, int position);
-
-    void onUpdateCardTranslation(int currentIndex, View child);
+    }
 }

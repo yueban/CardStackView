@@ -25,12 +25,12 @@ public class CardStackLayoutManager
 
     private final Context context;
 
-    private CardStackListener listener = CardStackListener.DEFAULT;
+    private CardStackListener listener;
     private CardStackSetting setting = new CardStackSetting();
     private CardStackState state = new CardStackState();
 
     public CardStackLayoutManager(Context context) {
-        this(context, CardStackListener.DEFAULT);
+        this(context,  CardStackListener.DEFAULT);
     }
 
     public CardStackLayoutManager(Context context, CardStackListener listener) {
