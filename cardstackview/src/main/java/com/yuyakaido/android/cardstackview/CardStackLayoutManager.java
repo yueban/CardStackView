@@ -343,6 +343,12 @@ public class CardStackLayoutManager
                 resetOverlay(child);
 
                 if (currentIndex == 0) {
+                    if (state.isBeforeRewindMove()) {
+                        child.setAlpha(0);
+                    } else {
+                        child.setAlpha(1);
+                    }
+
                     updateTranslation(child);
                     resetScale(child);
                     updateOverlay(child);
