@@ -12,6 +12,7 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
 
     private ScrollType type;
     private CardStackLayoutManager manager;
+
     public CardStackSmoothScroller(
             ScrollType type,
             CardStackLayoutManager manager
@@ -43,6 +44,8 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
             // ■ 副作用
             // ViewのRemoveを行っているため、表示対象となっているViewの再生成が実行されてしまう
             // これによってパフォーマンス上の問題が発生する可能性がある
+            manager.getCardStackState().scrollerStatus = CardStackState.ScrollerStatus.onSeekTargetStep;
+
             manager.removeAllViews();
             RewindAnimationSetting setting = manager.getCardStackSetting().rewindAnimationSetting;
             action.update(
@@ -60,6 +63,8 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
             @NonNull RecyclerView.State state,
             @NonNull Action action
     ) {
+        manager.getCardStackState().scrollerStatus = CardStackState.ScrollerStatus.onTargetFound;
+
         int x = (int) targetView.getTranslationX();
         int y = (int) targetView.getTranslationY();
         AnimationSetting setting;
@@ -107,6 +112,8 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
 
     @Override
     protected void onStart() {
+        manager.getCardStackState().scrollerStatus = CardStackState.ScrollerStatus.onStart;
+
         CardStackListener listener = manager.getCardStackListener();
         CardStackState state = manager.getCardStackState();
         switch (type) {
@@ -130,6 +137,8 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
 
     @Override
     protected void onStop() {
+        manager.getCardStackState().scrollerStatus = CardStackState.ScrollerStatus.onStop;
+
         CardStackListener listener = manager.getCardStackListener();
         switch (type) {
             case AutomaticSwipe:
