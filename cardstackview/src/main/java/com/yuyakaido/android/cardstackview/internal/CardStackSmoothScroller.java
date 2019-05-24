@@ -89,9 +89,11 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
                 break;
             case ManualSwipe:
                 setting = manager.getCardStackSetting().swipeAnimationSetting;
+                int dx = x == 0 ? 0 : -x / Math.abs(x) * Math.abs(getDx(setting));
+                int dy = y == 0 ? 0 : -y / Math.abs(y) * Math.abs(getDy(setting));
                 action.update(
-                        -x / Math.abs(x) * Math.abs(getDx(setting)),
-                        -y / Math.abs(y) * Math.abs(getDy(setting)),
+                        dx,
+                        dy,
                         setting.getDuration(),
                         setting.getInterpolator()
                 );
