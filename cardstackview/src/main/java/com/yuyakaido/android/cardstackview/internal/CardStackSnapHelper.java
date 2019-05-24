@@ -29,8 +29,11 @@ public class CardStackSnapHelper extends SnapHelper {
                     CardStackSetting setting = manager.getCardStackSetting();
                     float horizontal = Math.abs(x) / (float) targetView.getWidth();
                     float vertical = Math.abs(y) / (float) targetView.getHeight();
-                    if (setting.swipeThresholdRatio < horizontal || setting.swipeThresholdRatio < vertical
-                            || setting.swipeThreshold < Math.abs(x) || setting.swipeThreshold < Math.abs(y)) {
+                    int velocity = Math.max(velocityX, velocityY);
+                    boolean exceedVelocityLimit = setting.velocityLimitForCancel > 0 && velocity > setting.velocityLimitForCancel;
+                    if (!exceedVelocityLimit
+                            && (setting.swipeThresholdRatio < horizontal || setting.swipeThresholdRatio < vertical
+                            || setting.swipeThreshold < Math.abs(x) || setting.swipeThreshold < Math.abs(y))) {
                         CardStackState state = manager.getCardStackState();
                         if (setting.directions.contains(state.getDirection())) {
                             state.targetPosition = state.topPosition + 1;
