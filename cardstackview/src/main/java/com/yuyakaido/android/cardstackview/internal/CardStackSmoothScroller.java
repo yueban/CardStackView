@@ -88,12 +88,10 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
                 );
                 break;
             case ManualSwipe:
-                int dx = -x * 10;
-                int dy = -y * 10;
                 setting = manager.getCardStackSetting().swipeAnimationSetting;
                 action.update(
-                        dx,
-                        dy,
+                        -x / Math.abs(x) * Math.abs(getDx(setting)),
+                        -y / Math.abs(y) * Math.abs(getDy(setting)),
                         setting.getDuration(),
                         setting.getInterpolator()
                 );
@@ -162,10 +160,10 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
         int dx = 0;
         switch (setting.getDirection()) {
             case Left:
-                dx = -state.width * 2;
+                dx = -state.width * 3;
                 break;
             case Right:
-                dx = state.width * 2;
+                dx = state.width * 3;
                 break;
             case Top:
             case Bottom:
@@ -181,7 +179,7 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
         switch (setting.getDirection()) {
             case Left:
             case Right:
-                dy = state.height / 4;
+                dy = 0;
                 break;
             case Top:
                 dy = -state.height * 2;
