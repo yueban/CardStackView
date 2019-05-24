@@ -615,6 +615,13 @@ public class CardStackLayoutManager
         setting.swipeThreshold = swipeThreshold;
     }
 
+    public void setVelocityLimitForCancel(@IntRange(from = 0) int velocityLimitForCancel) {
+        if (velocityLimitForCancel < 0) {
+            throw new IllegalArgumentException("velocityLimitForCancel must be greater than 0.0f.");
+        }
+        setting.velocityLimitForCancel = velocityLimitForCancel;
+    }
+
     public void setDirections(@NonNull List<Direction> directions) {
         setting.directions = directions;
     }

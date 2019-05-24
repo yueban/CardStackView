@@ -19,6 +19,7 @@ public class CardStackSetting {
     public float scaleInterval = 0.95f; // 0.0f - 1.0f
     public float swipeThresholdRatio = 0.3f; // 0.0f - 1.0f
     public float swipeThreshold = 100f; // px
+    public int velocityLimitForCancel = 0;
     public List<Direction> directions = Direction.HORIZONTAL;
     public boolean canScrollHorizontal = true;
     public boolean canScrollVertical = true;
