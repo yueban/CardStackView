@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
-import com.yuyakaido.android.cardstackview.Duration;
 import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 
 public class CardStackSnapHelper extends SnapHelper {
@@ -31,9 +30,7 @@ public class CardStackSnapHelper extends SnapHelper {
                     CardStackSetting setting = manager.getCardStackSetting();
                     float horizontal = Math.abs(x) / (float) targetView.getWidth();
                     float vertical = Math.abs(y) / (float) targetView.getHeight();
-                    Duration duration = Duration.fromVelocity(velocityY < velocityX ? velocityX : velocityY);
-                    if (duration == Duration.Fast
-                            || setting.swipeThresholdRatio < horizontal || setting.swipeThresholdRatio < vertical
+                    if (setting.swipeThresholdRatio < horizontal || setting.swipeThresholdRatio < vertical
                             || setting.swipeThreshold < Math.abs(x) || setting.swipeThreshold < Math.abs(y)) {
                         CardStackState state = manager.getCardStackState();
                         if (setting.directions.contains(state.getDirection())) {
@@ -41,7 +38,7 @@ public class CardStackSnapHelper extends SnapHelper {
 
                             SwipeAnimationSetting swipeAnimationSetting = new SwipeAnimationSetting.Builder()
                                     .setDirection(setting.swipeAnimationSetting.getDirection())
-                                    .setDuration(duration.duration)
+                                    .setDuration(setting.swipeAnimationSetting.getDuration())
                                     .setInterpolator(setting.swipeAnimationSetting.getInterpolator())
                                     .build();
                             manager.setSwipeAnimationSetting(swipeAnimationSetting);
