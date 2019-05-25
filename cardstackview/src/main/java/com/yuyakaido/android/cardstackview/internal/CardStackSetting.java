@@ -3,10 +3,9 @@ package com.yuyakaido.android.cardstackview.internal;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
+import com.yuyakaido.android.cardstackview.CardAnimationSetting;
 import com.yuyakaido.android.cardstackview.Direction;
-import com.yuyakaido.android.cardstackview.RewindAnimationSetting;
 import com.yuyakaido.android.cardstackview.StackFrom;
-import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 import com.yuyakaido.android.cardstackview.SwipeableMethod;
 
 import java.util.List;
@@ -24,7 +23,9 @@ public class CardStackSetting {
     public boolean canScrollHorizontal = true;
     public boolean canScrollVertical = true;
     public SwipeableMethod swipeableMethod = SwipeableMethod.AutomaticAndManual;
-    public SwipeAnimationSetting swipeAnimationSetting = new SwipeAnimationSetting.Builder().build();
-    public RewindAnimationSetting rewindAnimationSetting = new RewindAnimationSetting.Builder().build();
+    public CardAnimationSetting swipeAnimationSetting = new CardAnimationSetting.Builder().build();
+    public CardAnimationSetting manualSwipeAnimationSetting = new CardAnimationSetting.Builder().build();
+    public CardAnimationSetting rewindAnimationSetting = new CardAnimationSetting.Builder().build();
+    public CardAnimationSetting cancelAnimationSetting = new CardAnimationSetting.Builder().build();
     public Interpolator overlayInterpolator = new LinearInterpolator();
 }

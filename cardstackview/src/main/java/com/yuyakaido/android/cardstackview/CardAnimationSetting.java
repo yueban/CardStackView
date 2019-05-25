@@ -5,13 +5,13 @@ import android.view.animation.Interpolator;
 
 import com.yuyakaido.android.cardstackview.internal.AnimationSetting;
 
-public class SwipeAnimationSetting implements AnimationSetting {
+public class CardAnimationSetting implements AnimationSetting {
 
     private final Direction direction;
     private final int duration;
     private final Interpolator interpolator;
 
-    private SwipeAnimationSetting(
+    private CardAnimationSetting(
             Direction direction,
             int duration,
             Interpolator interpolator
@@ -56,8 +56,8 @@ public class SwipeAnimationSetting implements AnimationSetting {
             return this;
         }
 
-        public SwipeAnimationSetting build() {
-            return new SwipeAnimationSetting(
+        public CardAnimationSetting build() {
+            return new CardAnimationSetting(
                     direction,
                     duration,
                     interpolator

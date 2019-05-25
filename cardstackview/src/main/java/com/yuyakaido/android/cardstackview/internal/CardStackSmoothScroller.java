@@ -4,9 +4,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.yuyakaido.android.cardstackview.CardAnimationSetting;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
-import com.yuyakaido.android.cardstackview.RewindAnimationSetting;
 
 public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
 
@@ -47,7 +47,7 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
             manager.getCardStackState().scrollerStatus = CardStackState.ScrollerStatus.onSeekTargetStep;
 
             manager.removeAllViews();
-            RewindAnimationSetting setting = manager.getCardStackSetting().rewindAnimationSetting;
+            CardAnimationSetting setting = manager.getCardStackSetting().rewindAnimationSetting;
             action.update(
                     -getDx(setting),
                     -getDy(setting),
@@ -88,7 +88,7 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
                 );
                 break;
             case ManualSwipe:
-                setting = manager.getCardStackSetting().swipeAnimationSetting;
+                setting = manager.getCardStackSetting().manualSwipeAnimationSetting;
                 int dx = x == 0 ? 0 : -x / Math.abs(x) * Math.abs(getDx(setting));
                 int dy = y == 0 ? 0 : -y / Math.abs(y) * Math.abs(getDy(setting));
                 action.update(
@@ -99,7 +99,7 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
                 );
                 break;
             case ManualCancel:
-                setting = manager.getCardStackSetting().rewindAnimationSetting;
+                setting = manager.getCardStackSetting().cancelAnimationSetting;
                 action.update(
                         x,
                         y,
