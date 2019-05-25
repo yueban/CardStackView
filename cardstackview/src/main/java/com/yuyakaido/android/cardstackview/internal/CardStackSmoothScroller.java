@@ -162,10 +162,10 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
         int dx = 0;
         switch (setting.getDirection()) {
             case Left:
-                dx = -state.width * 3;
+                dx = (int) (-state.width * 1.5f);
                 break;
             case Right:
-                dx = state.width * 3;
+                dx = (int) (state.width * 1.5f);
                 break;
             case Top:
             case Bottom:
