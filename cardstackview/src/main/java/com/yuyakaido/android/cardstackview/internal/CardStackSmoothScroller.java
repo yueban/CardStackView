@@ -35,7 +35,7 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
             action.update(
                     -getDx(setting),
                     -getDy(setting),
-                    setting.getDuration(),
+                    1,
                     setting.getInterpolator()
             );
         }
