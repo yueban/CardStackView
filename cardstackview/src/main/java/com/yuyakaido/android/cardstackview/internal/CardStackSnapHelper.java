@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
 
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
-import com.yuyakaido.android.cardstackview.SwipeAnimationSetting;
 
 public class CardStackSnapHelper extends SnapHelper {
 
@@ -38,13 +37,6 @@ public class CardStackSnapHelper extends SnapHelper {
                         CardStackState state = manager.getCardStackState();
                         if (setting.directions.contains(state.getDirection())) {
                             state.targetPosition = state.topPosition + 1;
-
-                            SwipeAnimationSetting swipeAnimationSetting = new SwipeAnimationSetting.Builder()
-                                    .setDirection(setting.swipeAnimationSetting.getDirection())
-                                    .setDuration(setting.swipeAnimationSetting.getDuration())
-                                    .setInterpolator(setting.swipeAnimationSetting.getInterpolator())
-                                    .build();
-                            manager.setSwipeAnimationSetting(swipeAnimationSetting);
 
                             this.velocityX = 0;
                             this.velocityY = 0;

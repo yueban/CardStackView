@@ -122,7 +122,7 @@ class MainActivity : AppCompatActivity(), CardStackListener {
     private fun setupButton() {
         val skip = findViewById<View>(R.id.skip_button)
         skip.setOnClickListener {
-            val setting = SwipeAnimationSetting.Builder()
+            val setting = CardAnimationSetting.Builder()
                     .setDirection(Direction.Left)
                     .setDuration(Duration.Slow.duration)
                     .setInterpolator(AccelerateInterpolator())
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity(), CardStackListener {
 
         val rewind = findViewById<View>(R.id.rewind_button)
         rewind.setOnClickListener {
-            val setting = RewindAnimationSetting.Builder()
+            val setting = CardAnimationSetting.Builder()
                     .setDirection(Direction.Left)
                     .setDuration(Duration.Slow.duration)
                     .setInterpolator(DecelerateInterpolator())
@@ -144,7 +144,7 @@ class MainActivity : AppCompatActivity(), CardStackListener {
 
         val like = findViewById<View>(R.id.like_button)
         like.setOnClickListener {
-            val setting = SwipeAnimationSetting.Builder()
+            val setting = CardAnimationSetting.Builder()
                     .setDirection(Direction.Right)
                     .setDuration(Duration.Slow.duration)
                     .setInterpolator(AccelerateInterpolator())

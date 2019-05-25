@@ -638,12 +638,20 @@ public class CardStackLayoutManager
         setting.swipeableMethod = swipeableMethod;
     }
 
-    public void setSwipeAnimationSetting(@NonNull SwipeAnimationSetting swipeAnimationSetting) {
+    public void setSwipeAnimationSetting(@NonNull CardAnimationSetting swipeAnimationSetting) {
         setting.swipeAnimationSetting = swipeAnimationSetting;
     }
 
-    public void setRewindAnimationSetting(@NonNull RewindAnimationSetting rewindAnimationSetting) {
+    public void setManualSwipeAnimationSetting(@NonNull CardAnimationSetting manualSwipeAnimationSetting) {
+        setting.manualSwipeAnimationSetting = manualSwipeAnimationSetting;
+    }
+
+    public void setRewindAnimationSetting(@NonNull CardAnimationSetting rewindAnimationSetting) {
         setting.rewindAnimationSetting = rewindAnimationSetting;
+    }
+
+    public void setCancelAnimationSetting(@NonNull CardAnimationSetting cancelAnimationSetting) {
+        setting.cancelAnimationSetting = cancelAnimationSetting;
     }
 
     public void setOverlayInterpolator(@NonNull Interpolator overlayInterpolator) {
