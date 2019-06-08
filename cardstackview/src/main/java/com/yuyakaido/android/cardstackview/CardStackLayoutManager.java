@@ -7,17 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Interpolator;
 
-import androidx.annotation.FloatRange;
-import androidx.annotation.IntRange;
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import com.yuyakaido.android.cardstackview.internal.CardStackSetting;
 import com.yuyakaido.android.cardstackview.internal.CardStackSmoothScroller;
 import com.yuyakaido.android.cardstackview.internal.CardStackState;
 import com.yuyakaido.android.cardstackview.internal.DisplayUtil;
 
 import java.util.List;
+
+import androidx.annotation.FloatRange;
+import androidx.annotation.IntRange;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class CardStackLayoutManager
         extends RecyclerView.LayoutManager
@@ -343,12 +343,6 @@ public class CardStackLayoutManager
                 resetOverlay(child);
 
                 if (currentIndex == 0) {
-                    if (state.isBeforeRewindMove()) {
-                        child.setAlpha(0);
-                    } else {
-                        child.setAlpha(1);
-                    }
-
                     updateTranslation(child);
                     resetScale(child);
                     updateOverlay(child);

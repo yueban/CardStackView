@@ -1,19 +1,15 @@
 package com.yuyakaido.android.cardstackview.internal;
 
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.support.annotation.IntDef;
-import android.support.v7.widget.RecyclerView;
-
 import com.yuyakaido.android.cardstackview.Direction;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
+import androidx.annotation.IntDef;
+import androidx.recyclerview.widget.RecyclerView;
+
 public class CardStackState {
     public Status status = Status.Idle;
-    @ScrollerStatus
-    public int scrollerStatus = ScrollerStatus.onStop;
     public int width = 0;
     public int height = 0;
     public int dx = 0;
@@ -43,10 +39,6 @@ public class CardStackState {
     }
 
     public float getRatio() {
-        if (isBeforeRewindMove()) {
-            return 1.0f;
-        }
-
         int absDx = Math.abs(dx);
         int absDy = Math.abs(dy);
         float ratio;
@@ -56,12 +48,6 @@ public class CardStackState {
             ratio = absDx / (width / 2.0f);
         }
         return Math.min(ratio, 1.0f);
-    }
-
-    public boolean isBeforeRewindMove() {
-        return status == CardStackState.Status.RewindAnimating
-                && scrollerStatus <= CardStackState.ScrollerStatus.onTargetFound
-                && dx == 0 && dy == 0;
     }
 
     public boolean isSwipeCompleted() {
