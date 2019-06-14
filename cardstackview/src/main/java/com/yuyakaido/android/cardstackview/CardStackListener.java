@@ -9,7 +9,10 @@ public interface CardStackListener {
 
     void onCardTranslation(float dx, float dy);
 
-    void onCardSwipeCompleted(Direction direction);
+    /**
+     * @return 'true' to remove swiped card, otherwise 'false'.
+     */
+    boolean onCardSwipeCompleted(Direction direction);
 
     void onCardSwiped(Direction direction);
 
@@ -35,8 +38,8 @@ public interface CardStackListener {
         }
 
         @Override
-        public void onCardSwipeCompleted(Direction direction) {
-
+        public boolean onCardSwipeCompleted(Direction direction) {
+            return true;
         }
 
         @Override

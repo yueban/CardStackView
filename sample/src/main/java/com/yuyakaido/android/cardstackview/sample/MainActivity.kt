@@ -48,8 +48,9 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         Log.d("CardStackView", "onCardTranslation: dx = $dx, dy = $dy")
     }
 
-    override fun onCardSwipeCompleted(direction: Direction?) {
+    override fun onCardSwipeCompleted(direction: Direction?): Boolean {
         Log.d("CardStackView", "onCardSwipeCompleted: p = ${manager.topPosition}, d = $direction")
+        return direction != Direction.Top
     }
 
     override fun onCardSwiped(direction: Direction) {
@@ -160,8 +161,9 @@ class MainActivity : AppCompatActivity(), CardStackListener {
         manager.setTranslationInterval(8.0f)
         manager.setScaleInterval(0.95f)
         manager.setSwipeThresholdRatio(0.19f)
+        manager.setIsSwipedThresholdMultiplierY(4f)
         manager.setVelocityLimitForCancel(1000)
-        manager.setDirections(Direction.HORIZONTAL)
+        manager.setDirections(listOf(Direction.Left, Direction.Right, Direction.Top))
         manager.setCanScrollHorizontal(true)
         manager.setCanScrollVertical(true)
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)

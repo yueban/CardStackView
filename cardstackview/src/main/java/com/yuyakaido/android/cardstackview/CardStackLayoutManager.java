@@ -254,72 +254,34 @@ public class CardStackLayoutManager
         state.width = getWidth();
         state.height = getHeight();
 
-        if (state.isSwipeCompleted()) {
-            // ■ 概要
-            // スワイプが完了したタイミングで、スワイプ済みのViewをキャッシュから削除する
-            // キャッシュの削除を行わないと、次回更新時にスワイプ済みのカードが表示されてしまう
-            // スワイプ済みカードが表示される場合、データソースは正しく、表示だけが古い状態になっている
-            //
-            // ■ 再現手順
-            // 1. `removeAndRecycleView(getTopView(), recycler);`をコメントアウトする
-            // 2. VisibleCount=1に設定し、最後のカードがスワイプされたらページングを行うようにする
-            // 3. カードを1枚だけ画面に表示する（このカードをAとする）
-            // 4. Aをスワイプする
-            // 5. カードを1枚だけ画面に表示する（このカードをBとする）
-            // 6. ページング完了後はBが表示されるはずが、Aが画面に表示される
+        if (state.isSwipeCompleted(setting)) {
             final Direction direction = state.getDirection();
-            listener.onCardSwipeCompleted(direction);
-            removeAndRecycleView(getTopView(), recycler);
-
-            state.next(state.status.toAnimatedStatus());
-            state.topPosition++;
-            state.dx = 0;
-            state.dy = 0;
-            if (state.topPosition == state.targetPosition) {
+            // determine if card should be removed
+            if (listener.onCardSwipeCompleted(direction)) {
+                removeAndRecycleView(getTopView(), recycler);
+                state.next(state.status.toAnimatedStatus());
+                state.topPosition++;
+                state.dx = 0;
+                state.dy = 0;
+                if (state.topPosition == state.targetPosition) {
+                    state.targetPosition = RecyclerView.NO_POSITION;
+                }
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        listener.onCardSwiped(direction);
+                        View topView = getTopView();
+                        if (topView != null) {
+                            listener.onCardAppeared(getTopView(), state.topPosition);
+                        }
+                    }
+                });
+            } else {
+                state.next(state.status.toAnimatedStatus());
+                state.dx = 0;
+                state.dy = 0;
                 state.targetPosition = RecyclerView.NO_POSITION;
             }
-
-            /* Handlerを経由してイベント通知を行っているのは、以下のエラーを回避するため
-             *
-             * 2019-03-31 18:44:29.744 8496-8496/com.yuyakaido.android.cardstackview.sample E/AndroidRuntime: FATAL EXCEPTION: main
-             *     Process: com.yuyakaido.android.cardstackview.sample, PID: 8496
-             *     java.lang.IllegalStateException: Cannot call this method while RecyclerView is computing a layout or scrolling com.yuyakaido.android.cardstackview.CardStackView{9d8ff78 VFED..... .F....ID 0,0-1080,1353 #7f080027 app:id/card_stack_view}, adapter:com.yuyakaido.android.cardstackview.sample.CardStackAdapter@e0b8651, layout:com.yuyakaido.android.cardstackview.CardStackLayoutManager@17b0eb6, context:com.yuyakaido.android.cardstackview.sample.MainActivity@fe550ca
-             *         at android.support.v7.widget.RecyclerView.assertNotInLayoutOrScroll(RecyclerView.java:2880)
-             *         at android.support.v7.widget.RecyclerView$RecyclerViewDataObserver.onItemRangeInserted(RecyclerView.java:5300)
-             *         at android.support.v7.widget.RecyclerView$AdapterDataObservable.notifyItemRangeInserted(RecyclerView.java:12022)
-             *         at android.support.v7.widget.RecyclerView$Adapter.notifyItemRangeInserted(RecyclerView.java:7214)
-             *         at android.support.v7.util.AdapterListUpdateCallback.onInserted(AdapterListUpdateCallback.java:42)
-             *         at android.support.v7.util.BatchingListUpdateCallback.dispatchLastEvent(BatchingListUpdateCallback.java:61)
-             *         at android.support.v7.util.DiffUtil$DiffResult.dispatchUpdatesTo(DiffUtil.java:852)
-             *         at android.support.v7.util.DiffUtil$DiffResult.dispatchUpdatesTo(DiffUtil.java:802)
-             *         at com.yuyakaido.android.cardstackview.sample.MainActivity.paginate(MainActivity.kt:164)
-             *         at com.yuyakaido.android.cardstackview.sample.MainActivity.onCardSwiped(MainActivity.kt:50)
-             *         at com.yuyakaido.android.cardstackview.CardStackLayoutManager.update(CardStackLayoutManager.java:277)
-             *         at com.yuyakaido.android.cardstackview.CardStackLayoutManager.scrollHorizontallyBy(CardStackLayoutManager.java:92)
-             *         at android.support.v7.widget.RecyclerView.scrollStep(RecyclerView.java:1829)
-             *         at android.support.v7.widget.RecyclerView$ViewFlinger.run(RecyclerView.java:5067)
-             *         at android.view.Choreographer$CallbackRecord.run(Choreographer.java:911)
-             *         at android.view.Choreographer.doCallbacks(Choreographer.java:723)
-             *         at android.view.Choreographer.doFrame(Choreographer.java:655)
-             *         at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:897)
-             *         at android.os.Handler.handleCallback(Handler.java:789)
-             *         at android.os.Handler.dispatchMessage(Handler.java:98)
-             *         at android.os.Looper.loop(Looper.java:164)
-             *         at android.app.ActivityThread.main(ActivityThread.java:6541)
-             *         at java.lang.reflect.Method.invoke(Native Method)
-             *         at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
-             *         at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)
-             */
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                    listener.onCardSwiped(direction);
-                    View topView = getTopView();
-                    if (topView != null) {
-                        listener.onCardAppeared(getTopView(), state.topPosition);
-                    }
-                }
-            });
         }
 
         detachAndScrapAttachedViews(recycler);
@@ -607,6 +569,34 @@ public class CardStackLayoutManager
             throw new IllegalArgumentException("SwipeThreshold must be greater than 0.0f.");
         }
         setting.swipeThreshold = swipeThreshold;
+    }
+
+    public void setIsSwipedThresholdX(@FloatRange(from = 0.0f) float isSwipedThresholdX) {
+        if (isSwipedThresholdX <= 0.0f) {
+            throw new IllegalArgumentException("isSwipedThresholdX must be greater than 0.0f.");
+        }
+        setting.isSwipedThresholdX = isSwipedThresholdX;
+    }
+
+    public void setIsSwipedThresholdMultiplierX(@FloatRange(from = 0.0f) float isSwipedThresholdMultiplierX) {
+        if (isSwipedThresholdMultiplierX <= 0.0f) {
+            throw new IllegalArgumentException("isSwipedThresholdMultiplierX must be greater than 0.0f.");
+        }
+        setting.isSwipedThresholdMultiplierX = isSwipedThresholdMultiplierX;
+    }
+
+    public void setIsSwipedThresholdY(@FloatRange(from = 0.0f) float isSwipedThresholdY) {
+        if (isSwipedThresholdY <= 0.0f) {
+            throw new IllegalArgumentException("isSwipedThresholdY must be greater than 0.0f.");
+        }
+        setting.isSwipedThresholdY = isSwipedThresholdY;
+    }
+
+    public void setIsSwipedThresholdMultiplierY(@FloatRange(from = 0.0f) float isSwipedThresholdMultiplierY) {
+        if (isSwipedThresholdMultiplierY <= 0.0f) {
+            throw new IllegalArgumentException("isSwipedThresholdMultiplierY must be greater than 0.0f.");
+        }
+        setting.isSwipedThresholdMultiplierY = isSwipedThresholdMultiplierY;
     }
 
     public void setVelocityLimitForCancel(@IntRange(from = 0) int velocityLimitForCancel) {

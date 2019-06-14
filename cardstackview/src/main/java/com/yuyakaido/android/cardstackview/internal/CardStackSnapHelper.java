@@ -2,12 +2,14 @@ package com.yuyakaido.android.cardstackview.internal;
 
 import android.view.View;
 
+import com.yuyakaido.android.cardstackview.CardAnimationSetting;
+import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
+import com.yuyakaido.android.cardstackview.Direction;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.SnapHelper;
-
-import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 
 public class CardStackSnapHelper extends SnapHelper {
 
@@ -35,11 +37,19 @@ public class CardStackSnapHelper extends SnapHelper {
                             && (setting.swipeThresholdRatio < horizontal || setting.swipeThresholdRatio < vertical
                             || setting.swipeThreshold < Math.abs(x) || setting.swipeThreshold < Math.abs(y))) {
                         CardStackState state = manager.getCardStackState();
-                        if (setting.directions.contains(state.getDirection())) {
+                        Direction direction = state.getDirection();
+                        if (setting.directions.contains(direction)) {
                             state.targetPosition = state.topPosition + 1;
 
                             this.velocityX = 0;
                             this.velocityY = 0;
+
+                            CardAnimationSetting oldSetting = manager.getCardStackSetting().manualSwipeAnimationSetting;
+                            manager.getCardStackSetting().manualSwipeAnimationSetting = new CardAnimationSetting.Builder()
+                                    .setDirection(direction)
+                                    .setInterpolator(oldSetting.getInterpolator())
+                                    .setDuration(oldSetting.getDuration())
+                                    .build();
 
                             CardStackSmoothScroller scroller = new CardStackSmoothScroller(CardStackSmoothScroller.ScrollType.ManualSwipe, manager);
                             scroller.setTargetPosition(manager.getTopPosition());

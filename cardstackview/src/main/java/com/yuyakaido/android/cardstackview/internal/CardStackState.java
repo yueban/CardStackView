@@ -50,10 +50,26 @@ public class CardStackState {
         return Math.min(ratio, 1.0f);
     }
 
-    public boolean isSwipeCompleted() {
+    public boolean isSwipeCompleted(CardStackSetting setting) {
         if (status.isSwipeAnimating()) {
             if (topPosition < targetPosition) {
-                if (width < Math.abs(dx) || height < Math.abs(dy)) {
+                final int thresholdX;
+                if (setting.isSwipedThresholdX != 0) {
+                    thresholdX = (int) setting.isSwipedThresholdX;
+                } else {
+                    thresholdX = (int) (width * setting.isSwipedThresholdMultiplierX);
+                }
+                if (thresholdX < Math.abs(dx)) {
+                    return true;
+                }
+
+                final int thresholdY;
+                if (setting.isSwipedThresholdY != 0) {
+                    thresholdY = (int) setting.isSwipedThresholdY;
+                } else {
+                    thresholdY = (int) (height * setting.isSwipedThresholdMultiplierY);
+                }
+                if (thresholdY < Math.abs(dy)) {
                     return true;
                 }
             }
