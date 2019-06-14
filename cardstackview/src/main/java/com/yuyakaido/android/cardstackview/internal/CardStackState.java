@@ -115,6 +115,10 @@ public class CardStackState {
             return this == ManualSwipeAnimating || this == AutomaticSwipeAnimating;
         }
 
+        public boolean isRewindAnimating() {
+            return this == RewindAnimating;
+        }
+
         public Status toAnimatedStatus() {
             switch (this) {
                 case ManualSwipeAnimating:
