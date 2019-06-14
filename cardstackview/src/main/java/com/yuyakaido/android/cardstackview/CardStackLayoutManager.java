@@ -557,18 +557,32 @@ public class CardStackLayoutManager
         setting.scaleInterval = scaleInterval;
     }
 
-    public void setSwipeThresholdRatio(@FloatRange(from = 0.0f, to = 1.0f) float swipeThresholdRatio) {
-        if (swipeThresholdRatio < 0.0f || 1.0f < swipeThresholdRatio) {
-            throw new IllegalArgumentException("swipeThresholdRatio must be 0.0f to 1.0f.");
+    public void setSwipeThresholdRatioX(@FloatRange(from = 0.0f, to = 1.0f) float swipeThresholdRatioX) {
+        if (swipeThresholdRatioX < 0.0f || 1.0f < swipeThresholdRatioX) {
+            throw new IllegalArgumentException("swipeThresholdRatioX must be 0.0f to 1.0f.");
         }
-        setting.swipeThresholdRatio = swipeThresholdRatio;
+        setting.swipeThresholdRatioX = swipeThresholdRatioX;
     }
 
-    public void setSwipeThreshold(@FloatRange(from = 0.0f) float swipeThreshold) {
-        if (swipeThreshold < 0.0f) {
-            throw new IllegalArgumentException("SwipeThreshold must be greater than 0.0f.");
+    public void setSwipeThresholdX(@FloatRange(from = 0.0f) float swipeThresholdX) {
+        if (swipeThresholdX < 0.0f) {
+            throw new IllegalArgumentException("swipeThresholdX must be greater than 0.0f.");
         }
-        setting.swipeThreshold = swipeThreshold;
+        setting.swipeThresholdX = swipeThresholdX;
+    }
+
+    public void setSwipeThresholdRatioY(@FloatRange(from = 0.0f, to = 1.0f) float swipeThresholdRatioY) {
+        if (swipeThresholdRatioY < 0.0f || 1.0f < swipeThresholdRatioY) {
+            throw new IllegalArgumentException("swipeThresholdRatioY must be 0.0f to 1.0f.");
+        }
+        setting.swipeThresholdRatioY = swipeThresholdRatioY;
+    }
+
+    public void setSwipeThresholdY(@FloatRange(from = 0.0f) float swipeThresholdY) {
+        if (swipeThresholdY < 0.0f) {
+            throw new IllegalArgumentException("swipeThresholdY must be greater than 0.0f.");
+        }
+        setting.swipeThresholdY = swipeThresholdY;
     }
 
     public void setIsSwipedThresholdX(@FloatRange(from = 0.0f) float isSwipedThresholdX) {

@@ -16,8 +16,10 @@ public class CardStackSetting {
     public float translationInterval = 8.0f;
     public boolean updateCardUIManually = false;
     public float scaleInterval = 0.95f; // 0.0f - 1.0f
-    public float swipeThresholdRatio = 0.3f; // 0.0f - 1.0f
-    public float swipeThreshold = 100f; // px
+    public float swipeThresholdRatioX = 0.3f; // 0.0f - 1.0f
+    public float swipeThresholdX = 100f; // px
+    public float swipeThresholdRatioY = 0.3f; // 0.0f - 1.0f
+    public float swipeThresholdY = 100f; // px
     public float isSwipedThresholdX = 0; // px
     public float isSwipedThresholdMultiplierX = 1;
     public float isSwipedThresholdY = 0; // px
