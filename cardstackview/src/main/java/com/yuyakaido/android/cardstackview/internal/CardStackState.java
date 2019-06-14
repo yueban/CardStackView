@@ -22,6 +22,10 @@ public class CardStackState {
         this.status = state;
     }
 
+    public boolean hasMoved() {
+        return dx != 0 || dy != 0;
+    }
+
     public Direction getDirection() {
         if (Math.abs(dy) < Math.abs(dx)) {
             if (dx < 0.0f) {

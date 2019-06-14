@@ -5,6 +5,7 @@ import android.view.View;
 import com.yuyakaido.android.cardstackview.CardAnimationSetting;
 import com.yuyakaido.android.cardstackview.CardStackLayoutManager;
 import com.yuyakaido.android.cardstackview.CardStackListener;
+import com.yuyakaido.android.cardstackview.Direction;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -100,7 +101,13 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
             case AutomaticSwipe:
                 state.next(CardStackState.Status.AutomaticSwipeAnimating);
                 if (!oldStatus.isSwipeAnimating()) {
-                    listener.onCardSwipeStart(state.getDirection());
+                    final Direction direction;
+                    if (state.hasMoved()) {
+                        direction = state.getDirection();
+                    } else {
+                        direction = manager.getCardStackSetting().swipeAnimationSetting.getDirection();
+                    }
+                    listener.onCardSwipeStart(direction);
                     listener.onCardDisappeared(manager.getTopView(), manager.getTopPosition());
                 }
                 break;
